@@ -1,26 +1,25 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
-	"os"
 )
 
 func main() {
-	sc := bufio.NewScanner(os.Stdin)
-	sc.Split(bufio.ScanWords)
+	var kakko string
 
-	sc.Scan()
-	kakko := sc.Text()
+	fmt.Scan(&kakko)
 
-	var stack []int
+	stack := []int{}
 
-	for i := range kakko {
-		if kakko[i] == '(' {
+	for i, ch := range kakko {
+		if ch == '(' {
 			stack = append(stack, i+1)
-		} else if kakko[i] == ')' {
-			fmt.Println(kakko[0:], i+1)
+		} else if ch == ')' {
+			if len(stack) > 0 {
+				openIndex := stack[len(stack)-1]
+				stack = stack[:len(stack)-1]
+				fmt.Println(openIndex, i+1)
+			}
 		}
-		kakko = kakko[1:]
 	}
 }
